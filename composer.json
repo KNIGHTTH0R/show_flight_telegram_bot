@@ -1,0 +1,10 @@
+{
+    "name": "roman/show_flight_telegram_bot",
+    "authors": [
+        {
+            "name": "romasmi",
+            "email": "romasmi@ro.ru"
+        }
+    ],
+    "require": {}
+}
