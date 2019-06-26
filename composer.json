@@ -6,5 +6,7 @@
             "email": "romasmi@ro.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "irazasyed/telegram-bot-sdk": "2.0"
+    }
 }
