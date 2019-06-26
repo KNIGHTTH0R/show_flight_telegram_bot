@@ -48,7 +48,7 @@ class TelegramBot
             $this->InitBotProperties();
             $this->HandleCommand();
         } else {
-            echo 'Welcome to telegram bot home page: Show Flight';
+            throw new Exception("Unable to load telegram api");
         }
     }
 

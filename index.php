@@ -11,6 +11,7 @@ try
 }
 catch (Exception $e)
 {
-    echo $e;
+    echo 'Welcome to telegram bot home page: Show Flight';
+    echo "<!--{$e}-->";
 }
 
