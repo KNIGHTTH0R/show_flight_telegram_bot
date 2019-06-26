@@ -18,12 +18,12 @@ if ($text) {
                 $telegram->replyKeyboardMarkup
                 (
                     [
-                        'keyboard' => [['Найти тур на конкретную дату'], ['Найти тур в интервал дат']],
+                        'keyboard' => [['Найти рейс на конкретную дату'], ['Найти тур в интервал дат']],
                         'resize_keyboard' => true,
                         'one_time_keyboard' => false
                     ]
                 );
-                $telegram->sendMessage(['chat_id' => $chat_id, 'text' => "Hello, {$name}"]);
+                $telegram->sendMessage(['chat_id' => $chat_id, 'text' => "Hello, {$name}!"]);
                 break;
             }
         default:
