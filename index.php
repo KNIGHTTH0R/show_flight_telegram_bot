@@ -11,13 +11,10 @@ $text = $result["message"]["text"];
 $chat_id = $result["message"]["chat"]["id"];
 $name = $result["message"]["from"]["username"];
 
-$keyboard = [["Answer me"]];
-
 if ($text) {
     switch ($text) {
         case '/start':
             {
-                $telegram->sendMessage(['chat_id' => $chat_id, 'text' => "Hello, {$name}"]);
                 $telegram->replyKeyboardMarkup
                 (
                     [
@@ -26,6 +23,7 @@ if ($text) {
                         'one_time_keyboard' => false
                     ]
                 );
+                $telegram->sendMessage(['chat_id' => $chat_id, 'text' => "Hello, {$name}"]);
                 break;
             }
         default:
