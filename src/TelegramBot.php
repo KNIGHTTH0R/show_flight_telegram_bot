@@ -23,7 +23,14 @@ class TelegramBot
 
     public function __construct(string $token)
     {
-        $this->bot = new Telegram\Bot\Api($token);
+        try
+        {
+            $this->bot = new Telegram\Bot\Api($token);
+        }
+        catch (Exception $e)
+        {
+            throw $e;
+        }
     }
 
     public function Load()
