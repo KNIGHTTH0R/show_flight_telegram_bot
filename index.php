@@ -1,3 +1,5 @@
-    <?php
+<?php
 
-echo 'Application is in developing';
+$userName = isset($_GET['name']) ? ', ' . $_GET['name'] : '';
+
+echo "Hello world{$userName}";
