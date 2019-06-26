@@ -89,7 +89,7 @@ class TelegramBot
         $this->BotMail("Неизвестная команда. Пожалуйста, воспользуйтесь меню ниже.", $keyboard);
     }
 
-    private function BotMail(string $message, array $keyboard = null)
+    private function BotMail(string $message, string $keyboard = null)
     {
         $this->bot->sendMessage([
             'chat_id' => $this->chatId,
