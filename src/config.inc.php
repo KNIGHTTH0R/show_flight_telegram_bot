@@ -1,0 +1,3 @@
+<?php
+
+define('TELEGRAM_API_TOKEN', '895714546:AAHdtxNN2dTVX03xP5F4hc7WJmfHXq6dzak');
