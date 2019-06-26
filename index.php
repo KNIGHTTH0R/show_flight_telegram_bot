@@ -15,7 +15,7 @@ if ($text) {
     switch ($text) {
         case '/start':
             {
-                $telegram->replyKeyboardMarkup
+                $keyboard = $telegram->replyKeyboardMarkup
                 (
                     [
                         'keyboard' => [['Найти рейс на конкретную дату'], ['Найти тур в интервал дат']],
@@ -23,7 +23,11 @@ if ($text) {
                         'one_time_keyboard' => false
                     ]
                 );
-                $telegram->sendMessage(['chat_id' => $chat_id, 'text' => "Hello, {$name}!"]);
+                $telegram->sendMessage([
+                    'chat_id' => $chat_id,
+                    'text' => "Hello, {$name}!",
+                    'reply_markup' => $keyboard
+                ]);
                 break;
             }
         default:
