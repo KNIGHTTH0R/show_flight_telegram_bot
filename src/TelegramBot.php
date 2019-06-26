@@ -1,6 +1,6 @@
 <?php
 
-require_once '../vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 use Telegram\Bot\Api;
 
@@ -44,8 +44,8 @@ class TelegramBot
     {
         if (isset($this->commands[$this->userCommand]))
         {
-            $command = "Command{$this->commands[$this->userCommand]}";
-            $this->$command;
+            $command = $this->commands[$this->userCommand];
+            $this->$command();
         }
         else
         {
