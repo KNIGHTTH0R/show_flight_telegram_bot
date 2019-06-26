@@ -8,7 +8,7 @@ class TelegramBot
 {
     protected $bot = null;
     protected $commands = [
-      '/start' => 'CommandStart'
+        '/start' => 'CommandStart'
     ];
     protected $botResult = null;
     protected $chatId = null;
@@ -28,27 +28,29 @@ class TelegramBot
 
     public function Load()
     {
-        $this->botResult = $this->bot->getWebhookUpdates();
-        if ($this->botResult)
+        try
         {
+            $this->botResult = $this->bot->getWebhookUpdates();
+        }
+        catch (Exception $e)
+        {
+            $this->botResult = null;
+        }
+
+        if ($this->botResult) {
             $this->InitBotProperties();
             $this->HandleCommand();
-        }
-        else
-        {
+        } else {
             echo 'Welcome to telegram bot home page: Show Flight';
         }
     }
 
     private function HandleCommand()
     {
-        if (isset($this->commands[$this->userCommand]))
-        {
+        if (isset($this->commands[$this->userCommand])) {
             $command = $this->commands[$this->userCommand];
             $this->$command();
-        }
-        else
-        {
+        } else {
             $this->CommandDefault();
         }
     }
@@ -61,7 +63,7 @@ class TelegramBot
         $this->userCommand = $this->ParseCommandName();
     }
 
-    private function  CommandStart()
+    private function CommandStart()
     {
         $keyboard = $this->bot->replyKeyboardMarkup
         (
@@ -98,8 +100,15 @@ class TelegramBot
         ]);
     }
 
-    private function ParseCommandName() : string
+    private function ParseCommandName(): string
     {
         return strtok($this->userMessage, ' ');
     }
 }
+
+/*
+ * Todo
+ * - проверить может ли отсутствовать username в telegram
+ * - лучше сделать привязку по id
+ *
+ * */
