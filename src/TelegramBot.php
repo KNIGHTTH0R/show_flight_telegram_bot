@@ -20,7 +20,7 @@ class TelegramBot
     protected $userCommand = null;
 
     protected $defaultKeyboard = [
-        ['Найти авиабилет'],
+        ['/startFind Найти авиабилет'],
         ['Отобразить статистику поиска']
     ];
 
@@ -120,7 +120,7 @@ class TelegramBot
             ]
         );
 
-        $this->BotMail("/startFind Поиск авиабилеты", $keyboard);
+        $this->BotMail("Поиск авиабилета...", $keyboard);
     }
 
     private function CommandDefault()
