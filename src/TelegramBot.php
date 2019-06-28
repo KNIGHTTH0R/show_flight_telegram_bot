@@ -3,12 +3,15 @@
 require_once 'vendor/autoload.php';
 
 use Telegram\Bot\Api;
+use thewulf7\travelPayouts\Travel;
 
 class TelegramBot
 {
     protected $bot = null;
     protected $commands = [
-        '/start' => 'CommandStart'
+        '/start' => 'CommandStart',
+        '/startFind' => 'CommandStartFindFlight',
+        '/find' => 'CommandFindFlight'
     ];
     protected $botResult = null;
     protected $chatId = null;
@@ -17,30 +20,24 @@ class TelegramBot
     protected $userCommand = null;
 
     protected $defaultKeyboard = [
-        ['Найти рейс на конкретную дату'],
-        ['Найти тур в интервале дат']
+        ['Найти авиабилет'],
+        ['Отобразить статистику поиска']
     ];
 
     public function __construct(string $token)
     {
-        try
-        {
+        try {
             $this->bot = new Telegram\Bot\Api($token);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     public function Load()
     {
-        try
-        {
+        try {
             $this->botResult = $this->bot->getWebhookUpdates();
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->botResult = null;
         }
 
@@ -70,6 +67,20 @@ class TelegramBot
         $this->userCommand = $this->ParseCommandName();
     }
 
+    private function BotMail(string $message, string $keyboard = null)
+    {
+        $this->bot->sendMessage([
+            'chat_id' => $this->chatId,
+            'text' => $message,
+            'reply_markup' => $keyboard
+        ]);
+    }
+
+    private function ParseCommandName(): string
+    {
+        return strtok($this->userMessage, ' ');
+    }
+
     private function CommandStart()
     {
         $keyboard = $this->bot->replyKeyboardMarkup
@@ -84,6 +95,34 @@ class TelegramBot
         $this->BotMail("Hello, {$this->userName}", $keyboard);
     }
 
+    private function CommandStartFindFlight()
+    {
+        $keyboard = $this->bot->replyKeyboardMarkup
+        (
+            [
+                'keyboard' => $this->defaultKeyboard,
+                'resize_keyboard' => true,
+                'one_time_keyboard' => false
+            ]
+        );
+
+        $this->BotMail("Введите команду вида: \"/find <Город вылета> <Город прилёта> <Дата вылета> <Дата возвращения> \", {$this->userName}", $keyboard);
+    }
+
+    private function CommandFindFlight()
+    {
+        $keyboard = $this->bot->replyKeyboardMarkup
+        (
+            [
+                'keyboard' => $this->defaultKeyboard,
+                'resize_keyboard' => true,
+                'one_time_keyboard' => false
+            ]
+        );
+
+        $this->BotMail("Поиск авиабилеты", $keyboard);
+    }
+
     private function CommandDefault()
     {
         $keyboard = $this->bot->replyKeyboardMarkup
@@ -96,20 +135,6 @@ class TelegramBot
         );
 
         $this->BotMail("Неизвестная команда. Пожалуйста, воспользуйтесь меню ниже.", $keyboard);
-    }
-
-    private function BotMail(string $message, string $keyboard = null)
-    {
-        $this->bot->sendMessage([
-            'chat_id' => $this->chatId,
-            'text' => $message,
-            'reply_markup' => $keyboard
-        ]);
-    }
-
-    private function ParseCommandName(): string
-    {
-        return strtok($this->userMessage, ' ');
     }
 }
 
