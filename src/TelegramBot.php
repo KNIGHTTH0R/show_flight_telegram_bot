@@ -120,7 +120,7 @@ class TelegramBot
             ]
         );
 
-        $this->BotMail("Поиск авиабилеты", $keyboard);
+        $this->BotMail("/startFind Поиск авиабилеты", $keyboard);
     }
 
     private function CommandDefault()
