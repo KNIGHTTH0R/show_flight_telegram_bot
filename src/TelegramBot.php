@@ -67,7 +67,7 @@ class TelegramBot
         $this->userCommand = $this->ParseCommandName();
     }
 
-    private function BotMail(string $message, string $keyboard = null)
+    private function SendMessage(string $message, string $keyboard = null)
     {
         $this->bot->sendMessage([
             'chat_id' => $this->chatId,
@@ -92,7 +92,7 @@ class TelegramBot
             ]
         );
 
-        $this->BotMail("Hello, {$this->userName}", $keyboard);
+        $this->SendMessage("Hello, {$this->userName}", $keyboard);
     }
 
     private function CommandStartFindFlight()
@@ -106,7 +106,7 @@ class TelegramBot
             ]
         );
 
-        $this->BotMail("Введите команду вида: \"/find <Город вылета> <Город прилёта> <Дата вылета> <Дата возвращения> \", {$this->userName}", $keyboard);
+        $this->SendMessage("Введите команду вида: \"/find <Город вылета> <Город прилёта> <Дата вылета> <Дата возвращения> \", {$this->userName}", $keyboard);
     }
 
     private function CommandFindFlight()
@@ -120,7 +120,11 @@ class TelegramBot
             ]
         );
 
-        $this->BotMail("Поиск авиабилета...", $keyboard);
+        $travel = new Travel(TRAVEL_PAYOUTS_API_TOKEN);
+        $ticketService = $travel->getTicketsService();
+        $flight = $ticketService->getCheap('KZN', 'CSY', '05.06.2019', '10.06.2019');
+
+        $this->SendMessage("Поиск авиабилета...", $keyboard);
     }
 
     private function CommandDefault()
@@ -134,7 +138,7 @@ class TelegramBot
             ]
         );
 
-        $this->BotMail("Неизвестная команда. Пожалуйста, воспользуйтесь меню ниже.", $keyboard);
+        $this->SendMessage("Неизвестная команда. Пожалуйста, воспользуйтесь меню ниже.", $keyboard);
     }
 }
 
@@ -142,5 +146,5 @@ class TelegramBot
  * Todo
  * - проверить может ли отсутствовать username в telegram
  * - лучше сделать привязку по id
- *
+ * -
  * */
